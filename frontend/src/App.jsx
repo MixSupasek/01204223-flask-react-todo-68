@@ -123,7 +123,7 @@ function App() {
                 }}
               />
 
-              <button onClick={() => {alert(newComments[todo.id])}}>Add Comment</button>
+              <button onClick={() => {addNewComment(todo.id)}}>Add Comment</button>
             </div>
           </li>
         ))}
