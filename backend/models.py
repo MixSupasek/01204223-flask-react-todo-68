@@ -14,7 +14,7 @@ class TodoItem(db.Model):
     done: Mapped[bool] = mapped_column(default=False)
 
 
-    comments: Mapped[list["Comment"]] = relationship(back_populates="todo")
+    comments: Mapped[list["Comment"]] = relationship(back_populates="todo",cascade="all, delete")
     def to_dict(self):
         return {
             "id": self.id,

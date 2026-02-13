@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import TodoItem from './TodoItem.jsx'
+import TodoItem from './Todoitem.jsx'
 
 function App() {
   const TODOLIST_API_URL = 'http://localhost:5000/api/todos/';
@@ -76,7 +76,7 @@ function App() {
     }
   }
 
-  async function addNewComment(todoId) {
+  async function addNewComment(todoId, newComment) {
     try {
       const url = `${TODOLIST_API_URL}${todoId}/comments/`;
       const response = await fetch(url, {
@@ -84,10 +84,9 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 'message': newComments[todoId] || "" }),
+        body: JSON.stringify({ 'message': newComment}),
       });
       if (response.ok) {
-        setNewComments({ ...newComments, [todoId]: "" });
         await fetchTodoList();
       }
     } catch (error) {
@@ -102,7 +101,10 @@ function App() {
         {todoList.map(todo => (
           <TodoItem 
             key={todo.id} 
-            todo={todo} 
+            todo={todo}
+            toggleDone={toggleDone}
+            deleteTodo={deleteTodo}
+            addNewComment={addNewComment}
           />
         ))}
       </ul>
