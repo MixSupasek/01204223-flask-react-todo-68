@@ -10,19 +10,20 @@ from models import TodoItem, Comment, db,User                       # import จ
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask_jwt_extended import JWTManager
 import click
+import os
 
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todos.db'
-app.config['JWT_SECRET_KEY'] = 'fdsjkfjioi2rjshr2345hrsh043j5oij5545'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///todos.db') 
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY','')
 jwt = JWTManager(app)
 
 db.init_app(app) 
 migrate = Migrate(app, db)  
     
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 todo_list = [
     { "id": 1,
@@ -96,7 +97,6 @@ def add_comment(todo_id):
 @click.argument("username")
 @click.argument("full_name")
 @click.argument("password")
-@jwt_required()
 def create_user(username, full_name, password):
     user = User.query.filter_by(username=username).first()
     if user:
