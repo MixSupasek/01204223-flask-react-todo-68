@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import { useAuth } from './context/AuthContext.jsx';
 import TodoItem from './TodoItem.jsx'
+import { useAuth } from './context/AuthContext.jsx';
 
 function TodoList({apiUrl}) {
-  const TODOLIST_API_URL = 'http://localhost:5000/api/todos/';
-  const { username, accessToken, logout } = useAuth();
+  const TODOLIST_API_URL = apiUrl;
   const [todoList, setTodoList] = useState([]);
-  const [newTitle, setNewTitle] = useState("");  
+  const [newTitle, setNewTitle] = useState("");
+  const { username, accessToken, logout } = useAuth();
+
 
   useEffect(() => {
     fetchTodoList();
