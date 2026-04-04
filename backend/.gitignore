@@ -3,4 +3,4 @@ __pycache__
 .env
 /frontend-static
 /local_config.py
-.env
+.env-f
